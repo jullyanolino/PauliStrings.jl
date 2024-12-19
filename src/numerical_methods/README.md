@@ -54,7 +54,7 @@ krylov_step!(ψ, H, dt)        # Krylov method
 
 ```julia
 # Complete time evolution
-function evolve_state(method, ψ₀, H, dt, steps)
+function evolve(method, ψ₀, H, dt, steps)
     ψ = copy(ψ₀)
     for _ in 1:steps
         method(ψ, H, dt)
@@ -71,19 +71,32 @@ end
 ### Imaginary-Time Evolution
 
 ```julia
-# Ground state search
-function find_ground_state(method, ψ₀, H, dτ, steps)
-    ψ = normalize(copy(ψ₀))
-    for _ in 1:steps
-        method(ψ, H, dτ)
-        normalize!(ψ)
-    end
-    return ψ
-end
+ψ = normalize(ψ0)
 
 # Use different methods
-gs_euler = find_ground_state(euler_step_imag!, ψ₀, H, dt, steps)
-gs_rk4 = find_ground_state(rk4_step_imag!, ψ₀, H, dt, steps)
+imag_methods = [
+    (QuantumEvolution.euler_step_imag!, "Euler Imag"),
+    (QuantumEvolution.rk4_step_imag!, "RK4 Imag"),
+    ((ψ, H, Δt) -> QuantumEvolution.trotter_step_imag!(ψ, H, H, Δt, 10), "Trotter Imag"),
+    (QuantumEvolution.krylov_step_imag!, "Krylov Imag")
+]
+
+# Benchmark imaginary-time methods
+for (method, name) in imag_methods
+    energy_evolution = Float64[]
+    fidelity_evolution = Float64[]
+    
+    execution_time = @elapsed begin
+        # Ground state search
+        for t in times
+            exact_ψ = exact_solution_imag(t)
+            push!(energy_evolution, real(dot(ψ, H * ψ)))
+            push!(fidelity_evolution, abs2(dot(exact_ψ, ψ)))
+            method(ψ, H, Δt)
+            normalize!(ψ)
+        end
+    end
+end
 ```
 
 ## Benchmarking
