@@ -131,10 +131,10 @@ If you use this package in your research, please cite:
 
 ```bibtex
 @software{quantumevolution_jl,
-  author = {Your Name},
+  author = {Jullyano Lino},
   title = {QuantumEvolution.jl: A Julia Package for Quantum Time Evolution},
   year = {2024},
-  url = {https://github.com/yourusername/QuantumEvolution.jl}
+  url = {https://github.com/jullyanolino/PauliStrings.jl/tree/main/src/numerical_methods/QuantumEvolution.jl}
 }
 ```
 
