@@ -8,7 +8,6 @@ This package provides efficient implementations of both real-time and imaginary-
 - Multiple time evolution methods:
   - Euler method (1st order)
   - Runge-Kutta 4 (4th order)
-  - Crank-Nicolson (2nd order, implicit)
   - Trotter-Suzuki decomposition
   - Krylov subspace method
 
