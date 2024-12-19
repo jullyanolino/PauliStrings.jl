@@ -67,7 +67,9 @@ real_times = [result[3] for result in results]
 imag_errors = [result[2] for result in imag_results]
 imag_times = [result[3] for result in imag_results]
 
+
 """
+#This code snippet needs some visual improvements
 plot(real_times, real_errors, xlabel="Time (s)", ylabel="Error", label="Real-Time Evolution", title="Real-Time Evolution Benchmark")
 plot!(imag_times, imag_errors, xlabel="Time (s)", ylabel="Error", label="Imaginary-Time Evolution", title="Imaginary-Time Evolution Benchmark")
 """
